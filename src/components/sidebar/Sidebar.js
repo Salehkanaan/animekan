@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from "react-router-dom";
-import Profile from '../components/img/Profile.gif';
+import Profile from '../img/Profile.gif';
 import PersonIcon from '@mui/icons-material/Person';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';

@@ -1,0 +1,94 @@
+{
+  "animes":[
+    {
+      "id": 1,
+      "name": "Attack on Titan",
+      "coverImage": "aot.jpeg",
+      "numberOfEpisodes": 75,
+      "rating": 9.1,
+      "releaseSeason": "Spring 2013",
+      "minimumAge": 17
+    },
+    {
+      "id": 2,
+      "name": "My Hero Academia",
+      "coverImage": "mhk.jpeg",
+      "numberOfEpisodes": 88,
+      "rating": 8.5,
+      "releaseSeason": "Spring 2016",
+      "minimumAge": 13
+    },
+    {
+      "id": 3,
+      "name": "Naruto",
+      "coverImage": "naruto.jpeg",
+      "numberOfEpisodes": 220,
+      "rating": 8.3,
+      "releaseSeason": "Fall 2002",
+      "minimumAge": 13
+    },
+    {
+      "id": 4,
+      "name": "One Piece",
+      "coverImage": "op.jpeg",
+      "numberOfEpisodes": 1000,
+      "rating": 8.8,
+      "releaseSeason": "Fall 1999",
+      "minimumAge": 13
+    },
+    {
+      "id": 5,
+      "name": "Death Note",
+      "coverImage": "dn.jpeg",
+      "numberOfEpisodes": 37,
+      "rating": 9.0,
+      "releaseSeason": "Fall 2006",
+      "minimumAge": 16
+    },
+    {
+      "id": 6,
+      "name": "Fullmetal Alchemist",
+      "coverImage": "fma.jpeg",
+      "numberOfEpisodes": 64,
+      "rating": 9.2,
+      "releaseSeason": "Fall 2003",
+      "minimumAge": 15
+    },
+    {
+      "id": 7,
+      "name": "Demon Slayer",
+      "coverImage": "dm.jpeg",
+      "numberOfEpisodes": 26,
+      "rating": 8.7,
+      "releaseSeason": "Spring 2019",
+      "minimumAge": 16
+    },
+    {
+      "id": 8,
+      "name": "Sword Art Online",
+      "coverImage": "sao.jpeg",
+      "numberOfEpisodes": 96,
+      "rating": 7.7,
+      "releaseSeason": "Summer 2012",
+      "minimumAge": 15
+    },
+    {
+      "id": 9,
+      "name": "Tokyo Ghoul",
+      "coverImage": "tg.jpeg",
+      "numberOfEpisodes": 48,
+      "rating": 7.9,
+      "releaseSeason": "Summer 2014",
+      "minimumAge": 14
+    },
+    {
+      "id": 10,
+      "name": "Steins Gate",
+      "coverImage": "sg.jpeg",
+      "numberOfEpisodes": 24,
+      "rating": 9.1,
+      "releaseSeason": "Spring 2011",
+      "minimumAge": 17
+    }
+  ]
+}

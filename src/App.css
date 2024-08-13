@@ -21,6 +21,7 @@ background-color: rgba(24, 24, 24, 0.986);
   color: #fff;
   
 }
+
 /************************************************/
 .toggle-button {
   position: relative;
@@ -47,7 +48,6 @@ color: rgb(255, 255, 255);
   transition: transform 0.3s ease;
   transform: translateX(-100%);
 }
-
 
 .mobile-menu-icon:hover{
   color: red;
@@ -306,6 +306,7 @@ margin-top: -2%;
 }
 /********************************************/
 .setting-navbar {
+  flex-direction: row;
   color: white;
   align-items: center;
   display: flex;
@@ -314,7 +315,9 @@ margin-top: -2%;
 .setting-navbar h1{
   padding-left: 10px;
 }
-
+/* .switch1{
+  margin-left:80%;
+} */
 .profile{
  margin-bottom: -10px;
   width:70px;
@@ -324,4 +327,8 @@ margin-top: -2%;
   border-bottom: 1px;
   border-width: 1px;
   border-color: #818181;
+}
+/****************************************************************/
+.charts{
+  background-color: #1d1d1d;
 }

@@ -1,0 +1,23 @@
+.add{
+    font-size: large;
+    padding: 20px;
+    
+    background-color: rgb(61, 61, 61);
+    position:relative;
+}
+.episodes{
+    display:block;
+    flex-direction: row;
+}
+.ep{
+    padding-right: 90%;
+    display: flex;
+    flex-direction:row;
+   
+    row-gap: 20%;
+   .emv{
+    display:flex ;
+    margin-left: 10%;
+  padding-left: 20%;
+   }
+}

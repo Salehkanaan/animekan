@@ -1,0 +1,55 @@
+.weather {
+  background-color: #87CEEB;
+}
+
+.toggle-button {
+  position: relative;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  z-index: 10; /* Ensure the button stays on top */
+}
+
+.toggle-button:hover {
+  color: #fff;
+}
+
+.weatherbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgb(92, 92, 92);
+  width: 250px;
+  color: #474747;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+  z-index: 5; /* Ensure the sidebar is above the content but below the button */
+}
+
+.weatherbar.open {
+  background-color: aqua;
+  transform: translateX(0);
+}
+
+.weather li:hover {
+  background-color: red;
+  color: white;
+}
+
+
+.weather-content {
+  display: flex;
+  margin-top: 50px; /* Space between button and content */
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.weatherbar.open ~ .weather-content {
+  transform: translateY(-200px); /* Adjust to the height of the sidebar */
+}
+.weather-image{
+  width:100%;
+}
