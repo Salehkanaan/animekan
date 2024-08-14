@@ -1,7 +1,7 @@
 
 import { Chart } from "react-google-charts";
 import { useParams } from "react-router-dom";
-import useFetch from "../usefetch";
+import useFetch from "../../usefetch";
 
 
 const Charts = () => {

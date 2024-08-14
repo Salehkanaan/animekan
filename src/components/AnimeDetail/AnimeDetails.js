@@ -1,5 +1,5 @@
-import useFetch from "../usefetch";
-import { useEffect, useRef, useState } from "react";
+import useFetch from "../../usefetch";
+import { useState } from "react";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ChatIcon from '@mui/icons-material/Chat';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -7,7 +7,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import './animeDetail.css'
 import Charts from "./Charts";
 const AnimeDetails = () => {
@@ -18,20 +18,9 @@ const AnimeDetails = () => {
     const navigate = useNavigate();
     const { id } = useParams();//used to extract the id parameter from the URL.
     const { data: anime, error, isPending } = useFetch("http://localhost:8000/animes/" + id);
- 
-    const [visibilityArray, setVisibilityArray] = useState([]);
-    useEffect(() => {
-        if (anime) {
-            setVisibilityArray(Array(anime.numberOfEpisodes).fill(true));
-        }
-    }, [anime]);
 
-    const toggleVisibility = (index) => {
-        setVisibilityArray(prevState => {
-            const newVisibilityArray = [...prevState];
-            newVisibilityArray[index] = !newVisibilityArray[index];
-            return newVisibilityArray;
-        });
+    const toggleVisibility = () => {
+        setVisible(prev => !prev)
     };
     const AnimeDetail = () => {
         return (
@@ -55,39 +44,46 @@ const AnimeDetails = () => {
         );
     }
     const WhichPage = () => {
-        if (anim == "detail") {
+        if (anim === "detail") {
             return <AnimeDetail />
         } else if (anim === "episode") {
             return <Episodes />
         } else if (anim === "analytics") {
             return <Charts />;
-        } else if (anim == "character") {
+        } else if (anim === "character") {
             return <div>Characters and Workers Component</div>;
         }
         else {
             return <AnimeDetail />
         }
     }
-    function EpisodeCreator() {
-        let i = 0;
+    const EpisodeCreator = () => {
+        let i;
         const episode = [];
-        for (i = 0; i < anime.numberOfEpisodes; i++) {
+        for (i = 1; i <= anime.numberOfEpisodes; i++) {
             episode.push(
-                <div className="ep" key={i}>
-                    <div className="epn">Episode:{i + 1}</div>
-                   <div className="emv">
-                   <div onClick={() => toggleVisibility(i)}>
-                            {visibilityArray[i] ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                        </div> <ChatIcon />
+                <div className="episodes" key={anime.id}>
+                    <div className="episode-link">
+                        <Link className="ep-link" to={`/animes/${id}/episode/${i}`}>
+                            <div className="epn">Episode:{i}</div>
+                        </Link>
+
+                        <div className="emv">
+                            <div onClick={toggleVisibility}>
+                                {visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                            </div>
+                            <ChatIcon />
+                        </div>
                     </div>
-                </div>);
+                </div>
+            );
         }
         return episode;
     }
     const Episodes = () => {
         return (
             <div className="episodes">
-                <EpisodeCreator />
+                {<EpisodeCreator />}
             </div>
         );
     }
@@ -97,6 +93,22 @@ const AnimeDetails = () => {
     const AddAn = () => {
         return <div className="add">Add to your List</div>
     }
+
+    const getUnderlinePosition = () => {
+        switch (anim) {
+            case "detail":
+                return "0%";
+            case "episode":
+                return "100%";
+            case "analytics":
+                return "200%";
+            case "character":
+                return "300%";
+            default:
+                return "0%";
+        }
+    };
+
     return (
         <>
             <nav className="an-navbar">
@@ -114,15 +126,20 @@ const AnimeDetails = () => {
                 {error && <div>{error}</div>}
             </nav>
             <div onClick={() => setAdd(false)}>
-                <div className={`an-page`}>
-                    <p onClick={() => setAnime("detail")}>Details</p>
-                    <div className={anim == "detail" ? "active" : ""}></div>
-                    <p onClick={() => setAnime("episode")}>Episodes</p>
-                    <div className={anim == "episode" ? "active" : ""}></div>
-                    <p onClick={() => setAnime("analytics")}>Analytics</p>
-                    <div className={anim == "analytics" ? "active" : ""}></div>
-                    <p onClick={() => setAnime("character")}>Characters </p>
-                    <div className={anim == "character" ? "active" : ""}></div>
+
+                <div className={`an-page`} style={{ "--underline-position": getUnderlinePosition() }}>
+                    <div className={anim === "detail" ? "active" : ""}
+                        onClick={() => setAnime("detail")}>Details</div>
+
+                    <div onClick={() => setAnime("episode")}
+                        className={anim === "episode" ? "active" : ""}>Episodes</div>
+
+                    <p ></p>
+                    <div onClick={() => setAnime("analytics")}
+                        className={anim === "analytics" ? "active" : ""}>Analytics</div>
+
+                    <div onClick={() => setAnime("character")}
+                        className={anim === "character" ? "active" : ""}>Characters</div>
 
                 </div>
                 {<WhichPage />}

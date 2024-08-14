@@ -1,0 +1,90 @@
+.anime-details {
+    max-width: 1/4;
+    display: flex;
+}
+
+.add {
+    font-size: large;
+    padding: 20px;
+
+    background-color: rgb(61, 61, 61);
+    position: relative;
+}
+
+.episodes {
+    display: block;
+    flex-direction: row;
+
+    .episode-link {
+        display: flex;
+        width: calc(90% - 20px);
+        justify-content: space-between;
+        /* Adjust width as needed */
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+
+        .ep-link {
+            color: black;
+            text-decoration: none;
+        }
+
+        .epn {
+            margin-right: auto;
+        }
+
+        .emv {
+            display: flex;
+        }
+    }
+
+}
+
+.image-detail {
+    max-width: fit-content;
+}
+
+.an-navbar {
+    color: rgb(255, 255, 255);
+    font-size: 10pt;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1d1d1d;
+}
+
+.an-page {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    position: relative;
+}
+
+.an-page div {
+    padding: 10px 20px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.an-page::before {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 2px;
+    background-color: #700000;
+    width: 25%;
+    /* Adjust this based on the number of tabs */
+    transform: translateX(var(--underline-position, 0%));
+    transition: transform 0.4s ease;
+}
+
+
+.app.dark .an-detail p {
+    color: rgba(255, 255, 255, 0.726);
+    display: block;
+}
