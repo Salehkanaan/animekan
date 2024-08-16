@@ -10,13 +10,9 @@ import EpisodesDetail from './components/AnimeDetail/EpisodesDetail';
 
 function App() {
  const [theme, setTheme] = useState(false);
- const [isOpen, setIsOpen] = useState(false);
   function togtheme() {
     setTheme(theme => !theme)
   }
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen)
-};
   return (
  <div>
     <BrowserRouter>

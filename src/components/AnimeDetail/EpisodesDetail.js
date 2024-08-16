@@ -9,8 +9,6 @@ import './animeDetail.css'
 import { useState } from 'react';
 import useFetch from '../../usefetch';
 import YouTubeEmbed from './Video';
-import ReactPlayer from 'react-player';
-import { Player } from 'video-react';
 
 const EpisodesDetail = () => {
   const [fav, setFav] = useState(false);
@@ -39,7 +37,7 @@ const EpisodesDetail = () => {
         {error && <div>{error}</div>}
       </nav>
       <div className="ep-detail">
-        <YouTubeEmbed num={id2} />
+       {anime && <YouTubeEmbed aname={anime.name} num={id2} />}
       </div>
     </>
   );

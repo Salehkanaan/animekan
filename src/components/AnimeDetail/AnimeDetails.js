@@ -62,7 +62,7 @@ const AnimeDetails = () => {
         const episode = [];
         for (i = 1; i <= anime.numberOfEpisodes; i++) {
             episode.push(
-                <div className="episodes" key={anime.id}>
+                <div className="episodes" >
                     <div className="episode-link">
                         <Link className="ep-link" to={`/animes/${id}/episode/${i}`}>
                             <div className="epn">Episode:{i}</div>
