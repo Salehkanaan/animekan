@@ -4,6 +4,32 @@ const useFetch = (url) => { //fetching different data other than blogs
     const [isPending, setIsPending] = useState(true);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+       
+        const cancelToken = axios.CancelToken.source()
+        setTimeout(() => {//message timeout
+            axios.get(url,{cancelToken:cancelToken.token})//json fetch
+                .then((res) => {
+                    setData(res.data);
+                    setIsPending(false);
+                    setError(null);
+                }).catch(err => {
+                    if (axios.isCancel(err)) {
+                        console.log('fetch aborted');
+                    } else {
+                        setError(err.message);
+                        setIsPending(false);
+                    }
+                })
+        }, 1000);
+        return () => {
+            cancelToken.cancel();
+        }
+    }, [url]); //[] is for dependencies
+    return { data, isPending, error }
+}
+export default useFetch;
 //     useEffect(() => {
 //         const abortCont =new AbortController();
 //         setTimeout(() => {//message timeout
@@ -31,28 +57,3 @@ const useFetch = (url) => { //fetching different data other than blogs
 //    abortCont.abort(); 
 // }
 //     }, [url]); 
-    useEffect(() => {
-       
-        const cancelToken = axios.CancelToken.source()
-        setTimeout(() => {//message timeout
-            axios.get(url,{cancelToken:cancelToken.token})//json fetch
-                .then((res) => {
-                    setData(res.data);
-                    setIsPending(false);
-                    setError(null);
-                }).catch(err => {
-                    if (axios.isCancel(err)) {
-                        console.log('fetch aborted');
-                    } else {
-                        setError(err.message);
-                        setIsPending(false);
-                    }
-                })
-        }, 1000);
-        return () => {
-            cancelToken.cancel();
-        }
-    }, [url]); //[] is for dependencies
-    return { data, isPending, error }
-}
-export default useFetch;

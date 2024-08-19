@@ -9,37 +9,34 @@ import Weather from './components/weather/Weather';
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [status, setStatus] = useState(false);
-const { data: animes, isPending, error } = useFetch("http://localhost:8000/animes");
-const [list,setList]=useState(false);
-function togList(){
+  const { data: animes, isPending, error } = useFetch("http://localhost:8000/animes");
+  const [list, setList] = useState(false);
+  function togList() {
     setList(!list);
-}
-function toggle() {
-    setStatus(!status);
-  } 
+  }
+  function toggle() {
+    setStatus(status=>!status);
+  }
   const toggleSidebar = () => {
     setIsOpen(!isOpen)
-};
-
-
-
+  };
   return (
-   <div>
+    <div>
       <Navbar listStatu={list} list={togList}
-       statu={status} toggle={toggle}
-       sidetog={toggleSidebar} sideStatu={isOpen}/>
+        statu={status} toggle={toggle}
+        sidetog={toggleSidebar} sideStatu={isOpen} />
 
-     <div onClick={()=>{
-      setIsOpen(false)
+      <div onClick={() => {
+        setIsOpen(false)
       }}>
 
-      {animes && <AnimeList list={list} animes={animes} />}
-      {error && <div>{error}</div>}
-      {isPending && <div><h3>Loading...</h3>
-        <Spinner size="xl" />
+        {animes && <AnimeList list={list} animes={animes} />}
+        {error && <div>{error}</div>}
+        {isPending && <div><h3>Loading...</h3>
+          <Spinner size="xl" />
 
-      </div>
-      }
+        </div>
+        }
       </div>
     </div>
   )
