@@ -6,22 +6,22 @@ import { auth, db } from "../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import upload from "../../lib/upload";
 import Notification from "../notification/Notification";
+
 const Login = () => {
-  const [avatar, setAvatar] = useState({
-    file: null,
-    url: "",
-  });
+  const [avatar, setAvatar] = useState({ file: null, url: "", });
   const [loading, setLoading] = useState(false);
+
+
   const handleAvatar = (e) => {
     setAvatar({
       file: e.target.files[0],
       url: URL.createObjectURL(e.target.files[0]),
     });
   };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     const formData = new FormData(e.target);
     const { email, password } = Object.fromEntries(formData);
 
@@ -34,26 +34,19 @@ const Login = () => {
       setLoading(false);
     }
 
-    // toast.error("Hello")
   };
 
   const handleRegister = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     setLoading(true);
-   
     const formData = new FormData(e.target);
     const { username, email, password } = Object.fromEntries(formData);
     if (!username || !email || !password)
       return toast.warn("Please enter inputs!");
     if (!avatar.file) return toast.warn("Please upload an avatar!");
-
-    // VALIDATE UNIQUE USERNAME
-   
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
-
       const imgUrl = await upload(avatar.file)
-
       await setDoc(doc(db, "users", res.user.uid), {
         username: username,
         email,
@@ -61,10 +54,7 @@ const Login = () => {
         id: res.user.uid,
         blocked: [],
       });
-
-
       toast.success("account created!You can login now.")
-
     } catch (err) {
       console.log(err);
       toast.error(err.message);
@@ -73,6 +63,8 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+
   return (
     <div className="login">
       <div className="item">
