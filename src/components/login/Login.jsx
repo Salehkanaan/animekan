@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./login.css";
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
@@ -6,11 +6,13 @@ import { auth, db } from "../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import upload from "../../lib/upload";
 import Notification from "../notification/Notification";
-
-const Login = () => {
+import { useNavigate } from "react-router-dom";
+import { MyContext } from '../../App';
+const Login = ({page}) => {
+  
   const [avatar, setAvatar] = useState({ file: null, url: "", });
   const [loading, setLoading] = useState(false);
-
+const navigate=useNavigate();
 
   const handleAvatar = (e) => {
     setAvatar({
@@ -18,7 +20,8 @@ const Login = () => {
       url: URL.createObjectURL(e.target.files[0]),
     });
   };
-
+  console.log(`anime: ${page}`)
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -27,6 +30,7 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      navigate(`/${page}`);
     } catch (err) {
       console.log(err)
       toast.error(err.message);

@@ -1,7 +1,7 @@
 import './App.css';
 import Home from './Home';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 import NotFound from './components/NotFound';
 import AnimeDetails from './components/AnimeDetail/AnimeDetails';
 import Setting from './components/sidebar/Setting';
@@ -9,11 +9,11 @@ import Weather from './components/weather/Weather';
 import EpisodesDetail from './components/AnimeDetail/EpisodesDetail';
 import Login from './components/login/Login';
 import Notification from './components/notification/Notification';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './lib/firebase';
-import { useUserStore } from './lib/userStore';
+ export const MyContext = createContext();
 function App() {
   const [theme, setTheme] = useState(false);
+  const [page, setPage] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   function togtheme() {
     setTheme(theme => !theme)
@@ -21,19 +21,20 @@ function App() {
 
   return (
     <div>
+
       <BrowserRouter>
         <div className={`app ${theme ? 'dark' : 'light'}`}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/animes/:id" element={<AnimeDetails />} />
-            <Route path="/animes/:id/episode/:id2" element={<EpisodesDetail />} />
-            <Route path="/setting" element={<Setting tog={togtheme} />} />
-            <Route path="/weather" element={<Weather />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-
-
+          <MyContext.Provider value={{page,setPage,inputValue,setInputValue}}>
+            <Routes>
+              <Route path="/" element={<Home/>} />
+              <Route path="/animes/:id" element={<AnimeDetails />} />
+              <Route path="/animes/:id/episode/:id2" element={<EpisodesDetail />} />
+              <Route path="/setting" element={<Setting tog={togtheme} />} />
+              <Route path="/weather" element={<Weather />} />
+              <Route path="*" element={<NotFound />} />
+              <Route path="/login" element={<Login page={page} />} />
+            </Routes>
+          </MyContext.Provider>
 
 
         </div>
