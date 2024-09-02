@@ -9,13 +9,22 @@ import './animeDetail.css'
 import { useState } from 'react';
 import useFetch from '../../usefetch';
 import YouTubeEmbed from './Video';
+import useFetch1 from '../../useFetch1';
 
 const EpisodesDetail = () => {
   const [fav, setFav] = useState(false);
   const [add, setAdd] = useState(false);
   const navigate = useNavigate();
   const { id, id2 } = useParams();//used to extract the id parameter from the URL.
-  const { data: anime, error, isPending } = useFetch("http://localhost:8000/animes/" + id);
+  const { data: anime, error, isPending } = useFetch1("http://localhost:3001/api/anime/" );
+
+  const SelectedAnime = []
+
+  if (anime) {
+    SelectedAnime.push(anime.info.animes.find((anime) => anime.id === parseInt(id)));
+
+  }
+ console.log("SelectedAnime===>", SelectedAnime);
 
   function togglefav() {
     setFav(fav => !fav);
@@ -26,8 +35,8 @@ const EpisodesDetail = () => {
   return (
     <>
       <nav className="an-navbar">
-        <ArrowBackIcon onClick={() => navigate(`/animes/${id}`)} />
-        {anime && <h2>{anime.name}</h2>}
+        <ArrowBackIcon onClick={() => navigate(`/api/anime/${id}`)} />
+        {anime && <h2>{SelectedAnime[id-1].name}</h2>}
         <ChatIcon />
         <button onClick={togglefav}>
           {fav ? <FavoriteIcon /> : <FavoriteBorderIcon />}</button>
@@ -37,7 +46,7 @@ const EpisodesDetail = () => {
         {error && <div>{error}</div>}
       </nav>
       <div className="ep-detail">
-       {anime && <YouTubeEmbed aname={anime.name} num={id2} />}
+        {anime && <YouTubeEmbed aname={SelectedAnime[id - 1].name} num={id2} />}
       </div>
     </>
   );

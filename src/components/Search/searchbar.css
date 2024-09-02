@@ -1,14 +1,13 @@
 
 .search1 {
     display: flex;
-    position: fixed;
+position:absolute;
 
 .search-input {
- width: 200%;
-    font-size: 10pt;
+ width: 100%;
+  font-size: 10pt;
     color: white;
     cursor: pointer;
-    padding: 4px;
     border-radius: 10px;
     background-image: url("../img/onepiece.jpg");
     border-style: none;
@@ -17,6 +16,7 @@
 
 }
 .search-icon{
+   
     color: rgb(54, 54, 59);
     cursor: pointer;
 }

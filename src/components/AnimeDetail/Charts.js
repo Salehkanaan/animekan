@@ -2,21 +2,29 @@
 import { Chart } from "react-google-charts";
 import { useParams } from "react-router-dom";
 import useFetch from "../../usefetch";
+import useFetch1 from "../../useFetch1";
 
 
 const Charts = () => {
   const { id } = useParams();//used to extract the id parameter from the URL.
-  const { data: anime,error,isPending } = useFetch("http://localhost:8000/animes/" + id);
-  
+  const { data: animes, error, isPending } = useFetch1("http://localhost:3001/api/anime");
+
+  //const [SelectedAnime,setSelectedAnime]=useState(null);
+  const anime = [];
+
+  if (animes) {
+    anime.push(animes.info.animes.find((anime) => parseInt(anime.id) === parseInt(id)));
+  }
+
   const data1 = [["Rating","votes"]];
-   if (anime && anime.votes) {
-    for (const [voteNb, vote] of Object.entries(anime.votes)) {
+   if (animes && anime[0].votes) {
+    for (const [voteNb, vote] of Object.entries(anime[0].votes)) {
       data1.push([voteNb, Number(vote)]); 
     }
   }
   const data2 = [["Rating","votes"]];
-  if (anime && anime.analytics) {
-   for (const [voteNb, vote] of Object.entries(anime.analytics)) {
+  if (animes && anime[0].analytics) {
+   for (const [voteNb, vote] of Object.entries(anime[0].analytics)) {
      data2.push([voteNb, Number(vote)]); 
    }
  }

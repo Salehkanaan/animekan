@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-const useFetch = (url) => { //fetching different data other than blogs
+
+const useFetch = (url) => {
     const [isPending, setIsPending] = useState(true);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-       
-        const cancelToken = axios.CancelToken.source()
+
+        const cancelToken = axios.CancelToken.source();
         setTimeout(() => {//message timeout
-            axios.get(url,{cancelToken:cancelToken.token})//json fetch
+         axios.get(url, { cancelToken: cancelToken.token })//json fetch
                 .then((res) => {
                     setData(res.data);
                     setIsPending(false);
@@ -23,13 +24,44 @@ const useFetch = (url) => { //fetching different data other than blogs
                     }
                 })
         }, 1000);
+       
         return () => {
             cancelToken.cancel();
-        }
-    }, [url]); //[] is for dependencies
-    return { data, isPending, error }
-}
+        };
+       
+        }, [url]);
+    return { data, isPending, error };
+};
+
 export default useFetch;
+//     const cancelToken = axios.CancelToken.source();
+
+//         const fetchData = async () => {
+//             try {
+//                 const response = await axios.get(url, { cancelToken: cancelToken.token,{
+//                     headers: {
+//                         'Authorization': `Bearer YOUR_ACCESS_TOKEN_HERE`
+//                     }
+// }});
+//                 setData(response.data);
+//                 setIsPending(false);
+//                 setError(null);
+//             } catch (err) {
+//                 if (axios.isCancel(err)) {
+//                     console.log('Fetch aborted');
+//                 } else {
+//                     setError(err.message);
+//                     setIsPending(false);
+//                 }
+//             }
+//         };
+
+//         fetchData();
+
+//         return () => {
+//             cancelToken.cancel(); // Cleanup if the component unmounts
+//         };
+//     }, [url]);
 //     useEffect(() => {
 //         const abortCont =new AbortController();
 //         setTimeout(() => {//message timeout

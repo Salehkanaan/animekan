@@ -13,8 +13,6 @@ const SearchBar = ({ animes, listStatu }) => {
     const { currentUser, isLoading, fetchUserInfo } = useUserStore();
     const [search, setSearch] = useState(false);
 
-
-
     useEffect(() => {
         const unSub = onAuthStateChanged(auth, (user) => {
             fetchUserInfo(user?.uid)
@@ -36,14 +34,13 @@ const SearchBar = ({ animes, listStatu }) => {
     }
     function isLogged(id) {
         if (currentUser) {
-            setUrl(`animes/${id}`)
+            setUrl(`api/anime/${id}`)
         }
         else {
             setUrl('/login');
-            setPage(`animes/${id}`)
+            setPage(`api/anime/${id}`)
         }
     }
-    console.log(animes);
 
     return (
         <>
@@ -65,7 +62,7 @@ const SearchBar = ({ animes, listStatu }) => {
                         return anime;  // Return all animes if the input is empty
                     }
                     else if (anime.name.toLowerCase().includes(inputValue.toLowerCase())) {
-                        return anime
+                        return anime;
                     }
                 }).map((anime, index) => (
                     <div className={listStatu ? "animeList-preview" : "anime-preview"} key={index}>

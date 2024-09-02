@@ -1,5 +1,5 @@
 import useFetch from "../../usefetch";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ChatIcon from '@mui/icons-material/Chat';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -10,31 +10,45 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import './animeDetail.css'
 import Charts from "./Charts";
+import useFetch1 from "../../useFetch1";
 const AnimeDetails = () => {
     const [fav, setFav] = useState(false);
-    const [anim, setAnime] = useState("detail");
+    const [anim, setAnim] = useState("detail");
     const [visible, setVisible] = useState(true);
     const [add, setAdd] = useState(false);
     const navigate = useNavigate();
     const { id } = useParams();//used to extract the id parameter from the URL.
-    const { data: anime, error, isPending } = useFetch("http://localhost:8000/animes/" + id);
+    const { data: animes, error, isPending } = useFetch1("http://localhost:3001/api/anime");
+ 
+    //const [SelectedAnime,setSelectedAnime]=useState(null);
+const SelectedAnime=[];
 
+if (animes) {
+            SelectedAnime.push(animes.info.animes.find((anime) => parseInt(anime.id) === parseInt(id)));
+        }      
+ 
+    console.log("SelectedAnime===>",SelectedAnime);
     const toggleVisibility = () => {
         setVisible(prev => !prev)
     };
+   
     const AnimeDetail = () => {
         return (
             <div className="anime-details">
                 {isPending && <div>Loading...</div>}
                 {error && <div>{error}</div>}
-                {anime && (
+                { animes &&(
                     <>
-                        <img className="image-detail" src={`../images/${anime.coverImage}`} />
+                        <img
+                       src={`../../images/${SelectedAnime[0].coverImage}`}
+                        alt={SelectedAnime[0].name} 
+                        className="image-detail" 
+                       />
                         <div className="an-detail">
-                            <h1>{anime.name}</h1>
+                            <h1>{SelectedAnime[0].name}</h1>
                             <p>Completed</p>
-                            <p>{anime.releaseSeason}</p>
-                            <p>Anime | {anime.numberOfEpisodes} Episodes | {anime.minimumAge}+</p>
+                            <p>{SelectedAnime[0].releaseSeason}</p>
+                            <p>Anime | {SelectedAnime[0].numberOfEpisodes} Episodes | {SelectedAnime[0].minimumAge}+</p>
                         </div>
 
                     </>
@@ -60,11 +74,11 @@ const AnimeDetails = () => {
     const EpisodeCreator = () => {
         let i;
         const episode = [];
-        for (i = 1; i <= anime.numberOfEpisodes; i++) {
+        for (i = 1; i <= SelectedAnime[0].numberOfEpisodes; i++) {
             episode.push(
                 <div className="episodes" >
                     <div className="episode-link">
-                        <Link className="ep-link" to={`/animes/${id}/episode/${i}`}>
+                        <Link className="ep-link" to={`/api/anime/${id}/episode/${i}`}>
                             <div className="epn">Episode:{i}</div>
                         </Link>
 
@@ -113,7 +127,7 @@ const AnimeDetails = () => {
         <>
             <nav className="an-navbar">
                 <ArrowBackIcon onClick={() => navigate("/")} />
-                {anime && <h2>{anime.name}</h2>}
+            {animes &&  <h2>{SelectedAnime[0].name}</h2>}
 
                 <ChatIcon />
 
@@ -129,16 +143,16 @@ const AnimeDetails = () => {
 
                 <div className={`an-page`} style={{ "--underline-position": getUnderlinePosition() }}>
                     <div className={anim === "detail" ? "active" : ""}
-                        onClick={() => setAnime("detail")}>Details</div>
+                        onClick={() => setAnim("detail")}>Details</div>
 
-                    <div onClick={() => setAnime("episode")}
+                    <div onClick={() => setAnim("episode")}
                         className={anim === "episode" ? "active" : ""}>Episodes</div>
 
                     <p ></p>
-                    <div onClick={() => setAnime("analytics")}
+                    <div onClick={() => setAnim("analytics")}
                         className={anim === "analytics" ? "active" : ""}>Analytics</div>
 
-                    <div onClick={() => setAnime("character")}
+                    <div onClick={() => setAnim("character")}
                         className={anim === "character" ? "active" : ""}>Characters</div>
 
                 </div>
